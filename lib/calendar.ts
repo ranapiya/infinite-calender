@@ -1,4 +1,4 @@
-// src/utils/calendar.ts
+
 
 import { format, getDaysInMonth, startOfMonth, parse } from 'date-fns';
 import { JournalEntry } from '@/data';

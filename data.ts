@@ -1,4 +1,4 @@
-// src/data.ts
+
 
 export const journalEntries = [
   {

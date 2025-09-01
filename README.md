@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Infinite Journal Calendar
 
-## Getting Started
+A modern, responsive web application for creating and browsing a personal photo journal. This app features an infinite-scrolling calendar view, allowing you to seamlessly navigate through months and years to revisit your past entries.
+Features
 
-First, run the development server:
+    Infinite Scrolling Calendar: Fluidly scroll up and down to load past and future months without page reloads.
 
-```bash
+    Visual Journal Entries: Entries are displayed directly on the calendar grid as images for quick and easy visual browsing.
+
+    Responsive Design: The layout automatically adapts to provide an optimal viewing experience on desktops, tablets, and mobile devices.
+
+    Interactive Details View: Click on any journal entry to open a full-screen sheet with a larger image, description, and other details.
+
+    Mobile-Friendly Navigation: On mobile devices, swipe left or right on a full-screen journal entry to navigate to the next or previous entry in your timeline.
+
+Tech Stack
+
+    Framework: Next.js (App Router)
+
+    Styling: Tailwind CSS
+
+    UI Components: Shadcn/ui
+
+    Date Utilities: date-fns
+
+    Swipe Gestures: react-swipeable
+
+Getting Started
+
+Follow these steps to set up and run the project locally.
+Prerequisites
+
+    Node.js (v18 or higher)
+
+    npm, yarn, or pnpm
+
+1. Clone the repository
+
+git clone [repository-url]
+cd [project-folder]
+
+
+2. Install dependencies
+
+npm install
+
+
+3. Run the development server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Open in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open http://localhost:3000 to view the application. The page will auto-update as you make changes to the code.

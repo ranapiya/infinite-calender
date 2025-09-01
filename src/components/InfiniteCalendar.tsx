@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -16,7 +15,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useSwipeable } from "react-swipeable";
-
+import Image from "next/image";
 interface MonthData {
   date: Date;
   key: string;
@@ -39,7 +38,7 @@ export default function InfiniteCalendar() {
 
   const loadMoreMonths = useCallback((direction: "up" | "down") => {
     setMonths((prevMonths) => {
-      let newMonths: MonthData[] = [];
+      const newMonths: MonthData[] = [];
       if (direction === "down") {
         const lastMonth =
           prevMonths.length > 0
@@ -96,7 +95,7 @@ export default function InfiniteCalendar() {
     onSwipedLeft: () => navigateEntries("next"),
     onSwipedRight: () => navigateEntries("prev"),
     preventScrollOnSwipe: true,
-    trackMouse: true, 
+    trackMouse: true,
   });
 
   useEffect(() => {
@@ -118,7 +117,7 @@ export default function InfiniteCalendar() {
     if (!container) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
+      () => {
         const allMonths = Array.from(
           container.querySelectorAll(".month-grid")
         ) as HTMLDivElement[];
@@ -170,7 +169,7 @@ export default function InfiniteCalendar() {
   return (
     <div className="flex flex-col h-screen items-center justify-center bg-gray-50">
       <div className="flex flex-col h-screen w-full max-w-5xl">
-        <header className="fixed top-0 left-0 w-full bg-white shadow z-10 p-3 text-center text-lg font-bold sm:p-4 sm:text-xl">
+        <header className=" mt-11 top-0 left-0 w-full  shadow z-10 p-3 text-center rounded-3xl bg-gradient-to-bl from-cyan-300 to-emerald-300 text-lg font-bold sm:p-4 sm:text-xl">
           {currentHeader || format(new Date(), "MMMM yyyy")}
         </header>
 
@@ -199,11 +198,14 @@ export default function InfiniteCalendar() {
               <div {...swipeHandlers} className="flex flex-col items-center">
                 <Card className="w-full">
                   <CardHeader>
-                    <img
-                      src={selectedEntry.imgUrl}
-                      alt="Journal Entry"
-                      className="w-full h-40 sm:h-48 object-cover rounded-md mb-4"
-                    />
+                    <div className="relative w-full h-40 sm:h-48 mb-4">
+                      <Image
+                        src={selectedEntry.imgUrl}
+                        alt="Journal Entry"
+                        fill
+                        className="object-cover rounded-md"
+                      />
+                    </div>
                     <SheetTitle className="text-base sm:text-lg">
                       {selectedEntry.date}
                     </SheetTitle>

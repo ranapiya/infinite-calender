@@ -1,17 +1,13 @@
 // src/utils/calendar.ts
 
-import { format, getDaysInMonth, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, parse, isSameDay } from 'date-fns';
+import { format, getDaysInMonth, startOfMonth, parse } from 'date-fns';
 import { JournalEntry } from '@/data';
 
 export const getMonthDetails = (date: Date) => {
   const start = startOfMonth(date);
-  const end = endOfMonth(date);
   const daysInMonth = getDaysInMonth(date);
   const startDayOfWeek = start.getDay(); 
-
-  const prevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);
-  const daysInPrevMonth = getDaysInMonth(prevMonth);
-  const prevMonthStart = daysInPrevMonth - startDayOfWeek + 1;
+  
 
   const monthArray: (Date | null)[] = [];
 

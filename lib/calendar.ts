@@ -7,7 +7,7 @@ export const getMonthDetails = (date: Date) => {
   const start = startOfMonth(date);
   const end = endOfMonth(date);
   const daysInMonth = getDaysInMonth(date);
-  const startDayOfWeek = start.getDay(); // 0 = Sunday, 1 = Monday
+  const startDayOfWeek = start.getDay(); 
 
   const prevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);
   const daysInPrevMonth = getDaysInMonth(prevMonth);
@@ -15,18 +15,18 @@ export const getMonthDetails = (date: Date) => {
 
   const monthArray: (Date | null)[] = [];
 
-  // Add empty slots for the days before the 1st of the month
+ 
   for (let i = 0; i < startDayOfWeek; i++) {
     monthArray.push(null);
   }
 
-  // Add days of the current month
+
   for (let i = 1; i <= daysInMonth; i++) {
     monthArray.push(new Date(date.getFullYear(), date.getMonth(), i));
   }
 
-  const remainingSlots = 42 - monthArray.length; // 6 weeks * 7 days
-  // Add empty slots for the days after the last day of the month
+  const remainingSlots = 42 - monthArray.length; 
+
   for (let i = 1; i <= remainingSlots; i++) {
     monthArray.push(null);
   }

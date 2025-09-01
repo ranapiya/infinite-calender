@@ -1,9 +1,10 @@
-// src/components/MonthGrid.tsx
+
 import React from 'react';
 import { getMonthDetails } from '@/lib/calendar';
-import { format, isSameDay } from 'date-fns';
+import { format } from 'date-fns';
 import { JournalEntry } from '@/data';
-import { Card,CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
+
 
 interface MonthGridProps {
   date: Date;
@@ -22,7 +23,7 @@ export default function MonthGrid({ date, entries, onEntryClick }: MonthGridProp
       data-month={monthName}
       data-year={year}
     >
-      <div className="grid grid-cols-7 text-center text-sm font-semibold text-gray-500 border-b border-gray-200">
+      <div className="grid grid-cols-7 text-center text-sm font-semibold text-cyan-700 border-b border-gray-200">
         {weekdayNames.map((day, index) => (
           <div key={index} className="p-2">
             {day}
@@ -38,15 +39,19 @@ export default function MonthGrid({ date, entries, onEntryClick }: MonthGridProp
             {day && (
               <div className="flex-1 flex flex-col gap-1 mt-1 overflow-hidden">
                 {entries[format(day, 'yyyy-MM-dd')]?.map((entry, entryIndex) => (
-                  <Card
+                  <div
                     key={entryIndex}
-                    className="p-1 cursor-pointer bg-blue-100 border-blue-300 hover:bg-blue-200 transition-colors"
                     onClick={() => onEntryClick(entry)}
+                    className="cursor-pointer" 
                   >
-                    <CardContent className="p-1 text-xs">
-                      {entry.categories[0]}
-                    </CardContent>
-                  </Card>
+                    <Card className="p-1 bg-blue-100 border-blue-300 hover:bg-blue-200 transition-colors flex items-center justify-center h-16 w-full overflow-hidden">
+                      <img
+                        src={entry.imgUrl}
+                        alt="Journal Entry Thumbnail"
+                        className="w-full h-full object-cover rounded-sm" 
+                      />
+                    </Card>
+                  </div>
                 ))}
               </div>
             )}

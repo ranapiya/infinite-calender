@@ -1,0 +1,58 @@
+// src/components/MonthGrid.tsx
+import React from 'react';
+import { getMonthDetails } from '@/lib/calendar';
+import { format, isSameDay } from 'date-fns';
+import { JournalEntry } from '@/data';
+import { Card,CardContent } from '@/components/ui/card';
+
+interface MonthGridProps {
+  date: Date;
+  entries: { [key: string]: JournalEntry[] };
+  onEntryClick: (entry: JournalEntry) => void;
+}
+
+const weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+export default function MonthGrid({ date, entries, onEntryClick }: MonthGridProps) {
+  const { monthName, year, days } = getMonthDetails(date);
+
+  return (
+    <div
+      className="month-grid p-2 mb-4"
+      data-month={monthName}
+      data-year={year}
+    >
+      <div className="grid grid-cols-7 text-center text-sm font-semibold text-gray-500 border-b border-gray-200">
+        {weekdayNames.map((day, index) => (
+          <div key={index} className="p-2">
+            {day}
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-1 mt-1">
+        {days.map((day, index) => (
+          <div key={index} className="flex flex-col min-h-[100px] border-r border-b border-gray-200 p-2 relative">
+            <span className="text-sm font-medium">
+              {day ? format(day, 'd') : ''}
+            </span>
+            {day && (
+              <div className="flex-1 flex flex-col gap-1 mt-1 overflow-hidden">
+                {entries[format(day, 'yyyy-MM-dd')]?.map((entry, entryIndex) => (
+                  <Card
+                    key={entryIndex}
+                    className="p-1 cursor-pointer bg-blue-100 border-blue-300 hover:bg-blue-200 transition-colors"
+                    onClick={() => onEntryClick(entry)}
+                  >
+                    <CardContent className="p-1 text-xs">
+                      {entry.categories[0]}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

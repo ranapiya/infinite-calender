@@ -8,14 +8,11 @@ import MonthGrid from "../components/MonthGrid";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import {Sheet,SheetContent,SheetDescription,SheetTitle} from "@/components/ui/sheet";
 import { useSwipeable } from "react-swipeable";
 import Image from "next/image";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 interface MonthData {
   date: Date;
   key: string;
@@ -28,6 +25,9 @@ export default function InfiniteCalendar() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+
 
   const groupedEntries = groupEntriesByDate(journalEntries);
   const sortedEntries = journalEntries.sort(
@@ -166,11 +166,65 @@ export default function InfiniteCalendar() {
     };
   }, [handleScroll]);
 
+
+
+
+
+   const handleJumpToDate = (date: Date) => {
+    if (!containerRef.current) return;
+    setSelectedDate(date);
+
+    // Ensure that month is loaded
+    const monthKey = format(date, "yyyy-MM");
+    const monthExists = months.some((m) => m.key === monthKey);
+
+    if (!monthExists) {
+      // load months until we get it
+      const diff =
+        (date.getFullYear() - months[0].date.getFullYear()) * 12 +
+        (date.getMonth() - months[0].date.getMonth());
+
+      if (diff > 0) {
+        for (let i = 0; i <= Math.ceil(diff / 3); i++) loadMoreMonths("down");
+      } else {
+        for (let i = 0; i <= Math.ceil(Math.abs(diff) / 3); i++)
+          loadMoreMonths("up");
+      }
+    }
+
+    setTimeout(() => {
+      const targetMonth = containerRef.current?.querySelector(
+        `[data-month="${format(date, "MMMM")}"][data-year="${date.getFullYear()}"]`
+      );
+      if (targetMonth) {
+        targetMonth.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 200);
+  };
+
   return (
     <div className="flex flex-col h-screen items-center justify-center bg-gray-50">
       <div className="flex flex-col h-screen w-full max-w-5xl">
-        <header className=" mt-11 top-0 left-0 w-full  shadow z-10 p-3 text-center rounded-3xl bg-gradient-to-bl from-cyan-300 to-emerald-300 text-lg font-bold sm:p-4 sm:text-xl">
-          {currentHeader || format(new Date(), "MMMM yyyy")}
+        <header className="flex items-center justify-between mt-20 p-3 rounded-3xl bg-gradient-to-bl from-cyan-300 to-emerald-300 shadow z-10">
+          <span className="text-lg font-bold sm:text-xl">
+            {currentHeader || format(new Date(), "MMMM yyyy")}
+          </span>
+          <div className="flex gap-2 items-center">
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => date && handleJumpToDate(date)}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Pick a date"
+              className="px-2 py-1 rounded-md border text-sm"
+            />
+            <Button
+              variant="secondary"
+              onClick={() => handleJumpToDate(new Date())}
+              className="text-sm"
+            >
+              Today
+            </Button>
+          </div>
         </header>
 
         <div
